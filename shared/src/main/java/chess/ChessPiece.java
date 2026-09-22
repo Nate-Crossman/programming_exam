@@ -177,6 +177,10 @@ public class ChessPiece {
 
     public Collection<ChessMove> getBishopMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> output = new HashSet<ChessMove>();
+        recursiveMovement(board, myPosition, myPosition, 1, 1, output);
+        recursiveMovement(board, myPosition, myPosition, -1, 1, output);
+        recursiveMovement(board, myPosition, myPosition, -1, -1, output);
+        recursiveMovement(board, myPosition, myPosition, 1, -1, output);
         return output;
     }
 
