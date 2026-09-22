@@ -48,6 +48,9 @@ public class ChessBoard {
                 board[i][j] = null;
             }
         }
+        for (int j = 0; j < 7; j++) {
+            board[7][j] = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN);
+        }
     }
 
     @Override
@@ -62,5 +65,21 @@ public class ChessBoard {
     @Override
     public int hashCode() {
         return Arrays.deepHashCode(board);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 7; i > 0; i--) {
+            for (int j = 0; j < 7; j++) {
+                if (board[i][j] == null) {
+                    output.append("| |");
+                } else {
+                    output.append("|" + board[i][j].toString() + "|");
+                }
+            }
+            output.append("\n");
+        }
+        return output.toString();
     }
 }
