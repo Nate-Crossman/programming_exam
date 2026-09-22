@@ -128,6 +128,23 @@ public class ChessPiece {
         output.add(new ChessMove(start, end, PieceType.BISHOP));
     }
 
+    private void attemptPawnAttack(ChessBoard board,
+                                   ChessPosition start,
+                                   ChessPosition end,
+                                   int promotionRow,
+                                   Collection<ChessMove> output) {
+        if (!isOnBoard(end)) {
+            return;
+        }
+        if (isOpponent(board, end)) {
+            if (start.getRow() == promotionRow) {
+                addPawnPromotionMoves(start, end, output);
+            } else {
+                output.add(new ChessMove(start, end, null));
+            }
+        }
+    }
+
     /**
      * Calculates all the positions a chess piece can move to
      * Does not take into account moves that are illegal due to leaving the king in
@@ -227,6 +244,11 @@ public class ChessPiece {
             promotionRow = 2;
             doubleRow = 7;
         }
+        if (myPosition.getRow() == doubleRow) {
+            if (isEmpty(board, doubleMove) && isEmpty(board, defaultMove)) {
+                output.add(new ChessMove(myPosition, doubleMove, null));
+            }
+        }
         if (isOnBoard(defaultMove) && isEmpty(board, defaultMove)) {
             if (myPosition.getRow() == promotionRow) {
                 addPawnPromotionMoves(myPosition, defaultMove, output);
@@ -234,6 +256,8 @@ public class ChessPiece {
                 output.add(new ChessMove(myPosition, defaultMove, null));
             }
         }
+        attemptPawnAttack(board, myPosition, diagonal1, promotionRow, output);
+        attemptPawnAttack(board, myPosition, diagonal2, promotionRow, output);
         return output;
     }
 
