@@ -186,11 +186,33 @@ public class ChessPiece {
 
     public Collection<ChessMove> getQueenMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> output = new HashSet<ChessMove>();
+        recursiveMovement(board, myPosition, myPosition, 1, 0, output);
+        recursiveMovement(board, myPosition, myPosition, -1, 0, output);
+        recursiveMovement(board, myPosition, myPosition, 0, 1, output);
+        recursiveMovement(board, myPosition, myPosition, 0, -1, output);
+        recursiveMovement(board, myPosition, myPosition, 1, 1, output);
+        recursiveMovement(board, myPosition, myPosition, -1, 1, output);
+        recursiveMovement(board, myPosition, myPosition, -1, -1, output);
+        recursiveMovement(board, myPosition, myPosition, 1, -1, output);
         return output;
     }
 
     public Collection<ChessMove> getPawnMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> output = new HashSet<ChessMove>();
+        ChessPosition defaultMove;
+        ChessPosition diagonal1;
+        ChessPosition diagonal2;
+        ChessPosition doubleMove;
+        int promotionRow;
+        int doubleRow;
+        if (color == ChessGame.TeamColor.WHITE) {
+            defaultMove = myPosition.getAdjacentPosition(1,0);
+            diagonal1 = myPosition.getAdjacentPosition(1,1);
+            diagonal2 = myPosition.getAdjacentPosition(1,-1);
+            doubleMove = myPosition.getAdjacentPosition(2, 0);
+            promotionRow = 6;
+            doubleMove = 1;
+        }
         return output;
     }
 
