@@ -117,6 +117,14 @@ public class ChessPiece {
 
     public Collection<ChessMove> getKnightMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> output = new HashSet<ChessMove>();
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(2,1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(1,2), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(-1,2), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(-2,1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(-2,-1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(-1,-2), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(1,-2), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(2,-1), output);
         return output;
     }
 
