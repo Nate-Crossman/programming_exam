@@ -34,6 +34,10 @@ public class ChessPosition {
         return col;
     }
 
+    public ChessPosition getAdjacentPosition(int row,int col) {
+        return new ChessPosition(this.row + row, this.col + col);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

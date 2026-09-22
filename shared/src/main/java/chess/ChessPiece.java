@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -53,7 +54,45 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        throw new RuntimeException("Not implemented");
+        switch (type) {
+            case KING -> {return getKingMoves(board, myPosition);}
+            case KNIGHT -> {return getKnightMoves(board, myPosition);}
+            case ROOK -> {return getRookMoves(board, myPosition);}
+            case BISHOP -> {return getBishopMoves(board, myPosition);}
+            case QUEEN -> {return getQueenMoves(board, myPosition);}
+            case PAWN -> {return getPawnMoves(board, myPosition);}
+            case null, default -> {return null;}
+        }
+    }
+
+    public Collection<ChessMove> getKingMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> output = new HashSet<ChessMove>();
+        return output;
+    }
+
+    public Collection<ChessMove> getKnightMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> output = new HashSet<ChessMove>();
+        return output;
+    }
+
+    public Collection<ChessMove> getRookMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> output = new HashSet<ChessMove>();
+        return output;
+    }
+
+    public Collection<ChessMove> getBishopMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> output = new HashSet<ChessMove>();
+        return output;
+    }
+
+    public Collection<ChessMove> getQueenMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> output = new HashSet<ChessMove>();
+        return output;
+    }
+
+    public Collection<ChessMove> getPawnMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> output = new HashSet<ChessMove>();
+        return output;
     }
 
     @Override
