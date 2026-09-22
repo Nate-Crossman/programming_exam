@@ -73,6 +73,14 @@ public class ChessPiece {
         return color != other.getTeamColor();
     }
 
+    private boolean isAlly(ChessBoard board, ChessPosition position) {
+        if (!isOnBoard(position) | isEmpty(board, position)) {
+            return false;
+        }
+        ChessPiece other = board.getPiece(position);
+        return color == other.getTeamColor();
+    }
+
     private void attemptMakeMove(ChessBoard board,
                                  ChessPosition start,
                                  ChessPosition end,
@@ -81,6 +89,36 @@ public class ChessPiece {
         if (isEmpty(board, end) | isOpponent(board, end)) {
             output.add(new ChessMove(start, end, null));
         }
+    }
+
+    private void recursiveMovement(ChessBoard board,
+                                   ChessPosition start,
+                                   ChessPosition position,
+                                   int row,
+                                   int col,
+                                   Collection<ChessMove> output) {
+        ChessPosition newPosition = position.getAdjacentPosition(row, col);
+        if (recursiveMoveHelper(board, start, newPosition, output)) {
+            recursiveMovement(board, start, newPosition, row, col, output);
+        }
+    }
+
+    private boolean recursiveMoveHelper(ChessBoard board,
+                                     ChessPosition start,
+                                     ChessPosition newPosition,
+                                     Collection<ChessMove> output) {
+        //case STOP
+        if (!isOnBoard(newPosition) | isAlly(board, newPosition)) {
+            return false;
+        }
+        //case make move but go no further
+        if (isOpponent(board, newPosition)) {
+            output.add(new ChessMove(start, newPosition, null));
+            return false;
+        }
+        //case add and continue onwards
+        output.add(new ChessMove(start, newPosition, null));
+        return true;
     }
 
     /**
@@ -130,6 +168,10 @@ public class ChessPiece {
 
     public Collection<ChessMove> getRookMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> output = new HashSet<ChessMove>();
+        recursiveMovement(board, myPosition, myPosition, 1, 0, output);
+        recursiveMovement(board, myPosition, myPosition, -1, 0, output);
+        recursiveMovement(board, myPosition, myPosition, 0, 1, output);
+        recursiveMovement(board, myPosition, myPosition, 0, -1, output);
         return output;
     }
 
