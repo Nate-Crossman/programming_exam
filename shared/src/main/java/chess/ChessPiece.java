@@ -70,7 +70,17 @@ public class ChessPiece {
             return false;
         }
         ChessPiece other = board.getPiece(position);
-        return type != other.getPieceType();
+        return color != other.getTeamColor();
+    }
+
+    private void attemptMakeMove(ChessBoard board,
+                                 ChessPosition start,
+                                 ChessPosition end,
+                                 Collection<ChessMove> output) {
+        if (!isOnBoard(end)) {return;}
+        if (isEmpty(board, end) | isOpponent(board, end)) {
+            output.add(new ChessMove(start, end, null));
+        }
     }
 
     /**
@@ -94,6 +104,14 @@ public class ChessPiece {
 
     public Collection<ChessMove> getKingMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> output = new HashSet<ChessMove>();
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(1,0), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(1,1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(0,1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(-1,1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(-1,0), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(-1,-1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(0,-1), output);
+        attemptMakeMove(board, myPosition, myPosition.getAdjacentPosition(1,-1), output);
         return output;
     }
 
